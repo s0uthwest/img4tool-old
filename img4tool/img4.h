@@ -15,6 +15,7 @@ extern "C" {
 
 #include <stdio.h>
 #include <plist/plist.h>
+    
 #define LEN_XTND  0x80		/* Indefinite or long form */
 typedef unsigned char byte;
 
@@ -84,7 +85,6 @@ typedef struct{
     byte more : 1;
 }t_asn1PrivateTag;
 
-
 #ifndef __cplusplus
 typedef enum{
     false,
@@ -98,9 +98,7 @@ char *ans1GetString(char *buf, char **outString, size_t *strlen);
 int asn1ElementsInObject(const char *buf);
 char *asn1ElementAtIndex(const char *buf, int index);
 
-
 char *getValueForTagInSet(char *set, uint32_t tag);
-
 
 //img4
 void printIM4P(char *buf);

@@ -205,9 +205,7 @@ void printHexString(t_asn1Tag *str){
     }
     
     t_asn1ElemLen len = asn1Len((char*)str+1);
-    
     unsigned char *string = (unsigned char*)str + len.sizeBytes +1;
-    
     while (len.dataLen--) printf("%02x",*string++);
 }
 
