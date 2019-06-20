@@ -4,6 +4,7 @@ autom4te.cache
 compile
 config.*
 configure*
+depcomp
 */.deps
 */.libs
 */img4tool

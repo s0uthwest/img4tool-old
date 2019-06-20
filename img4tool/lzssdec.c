@@ -1,38 +1,34 @@
 //
-//  lzssdec.h
+//  lzssdec.c
 //  img4tool
 //
 //  Code borrowed from: http://newosxbook.com/src.jl?tree=listings&file=joker.c
 //  Coded by Jonathan Levin (a.k.a @Morpheus______), http://newosxbook.com
+//
 
-#include "lzssdec.h"
 #include <string.h>
 #include <stdlib.h>
 
-/**************************************************************
- LZSS.C -- A Data Compression Program
- ***************************************************************
- 4/6/1989 Haruhiko Okumura
- Use, distribute, and modify this program freely.
- Please send me your improved versions.
- PC-VAN      SCIENCE
- NIFTY-Serve PAF01022
- CompuServe  74050,1022
- **************************************************************/
-/*
- *  lzss.c - Package for decompressing lzss compressed objects
- *
- *  Copyright (c) 2003 Apple Computer, Inc.
- *
- *  DRI: Josh de Cesare
- */
+#include "lzssdec.h"
+
+/* LZSS.C -- A Data Compression Program for decompressing lzss compressed objects
+   4/6/1989 Haruhiko Okumura
+   Use, distribute, and modify this program freely.
+   Please send me your improved versions.
+   PC-VAN      SCIENCE
+   NIFTY-Serve PAF01022
+   CompuServe  74050,1022
+ 
+   Copyright (c) 2003 Apple Computer, Inc.
+   DRI: Josh de Cesare                      */
+
 #define N         4096  /* size of ring buffer - must be power of 2 */
 #define F         18    /* upper limit for match_length */
 #define THRESHOLD 2     /* encode string into position and length
 if match_length is greater than this */
 #define NIL       N     /* index for root of binary search trees */
 
-int decompress_lzss(u_int8_t *dst, u_int8_t *src, u_int32_t srclen){
+int decompressed_lzss(u_int8_t *dst, u_int8_t *src, u_int32_t srclen){
     /* ring buffer of size N, with extra F-1 bytes to aid string comparison */
     u_int8_t text_buf[N + F - 1];
     u_int8_t *dststart = dst;
@@ -98,7 +94,7 @@ char *tryLZSS(char *compressed, size_t *filesize){
     }
     
     feed--;
-    int rc = decompress_lzss((void*)decomp, (void*)feed, ntohl(compHeader->compressedSize));
+    int rc = decompressed_lzss((void*)decomp, (void*)feed, ntohl(compHeader->compressedSize));
     if (rc != ntohl(compHeader->uncompressedSize)) {
         return NULL;
     }
@@ -106,4 +102,4 @@ char *tryLZSS(char *compressed, size_t *filesize){
     *filesize = rc;
     return (decomp);
     
-} // compLZSS
+}
