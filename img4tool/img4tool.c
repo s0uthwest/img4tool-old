@@ -11,9 +11,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <plist/plist.h>
+
 #include "img4.h"
 #include "img4tool.h"
-#include "all_img4tool.h"
+#include "all.h"
+
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
