@@ -8,6 +8,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <sys/types.h>
 
 #include "lzssdec.h"
 
@@ -27,6 +28,35 @@
 #define THRESHOLD 2     /* encode string into position and length
 if match_length is greater than this */
 #define NIL       N     /* index for root of binary search trees */
+
+/* define type for build for Windows support */
+typedef unsigned char u_int8_t;
+typedef unsigned int u_int32_t;
+void *lz_memmem(const void *b1, const void *b2, size_t len1, size_t len2)
+{
+    /* Initialize search pointer */
+    char *sp = (char *) b1;
+    
+    /* Initialize pattern pointer */
+    char *pp = (char *) b2;
+    
+    /* Initialize end of search address space pointer */
+    char *eos   = sp + len1 - len2;
+    
+    /* Sanity check */
+    if(!(b1 && b2 && len1 && len2))
+        return NULL;
+    
+    while (sp <= eos) {
+        if (*sp == *pp)
+            if (memcmp(sp, pp, len2) == 0)
+                return sp;
+        
+        sp++;
+    }
+    
+    return NULL;
+}
 
 int decompressed_lzss(u_int8_t *dst, u_int8_t *src, u_int32_t srclen){
     /* ring buffer of size N, with extra F-1 bytes to aid string comparison */
@@ -85,10 +115,10 @@ char *tryLZSS(char *compressed, size_t *filesize){
     
     char *decomp = malloc (ntohl(compHeader->uncompressedSize));
     
-    char *feed = memmem(compressed+64, 1024, sig, sizeof(sig));
+    char *feed = lz_memmem(compressed+64, 1024, sig, sizeof(sig));
     
     if (!feed){
-        feed = memmem(compressed+64, 1024, sig2, sizeof(sig2));
+        feed = lz_memmem(compressed+64, 1024, sig2, sizeof(sig2));
         if (!feed)
             return NULL;
     }
@@ -101,5 +131,4 @@ char *tryLZSS(char *compressed, size_t *filesize){
     
     *filesize = rc;
     return (decomp);
-    
 }
