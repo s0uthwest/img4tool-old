@@ -890,6 +890,11 @@ plist_t findAnyBuildidentityForFilehash(plist_t identities, char *hash, uint64_t
             skipelem("ftsp")
             skipelem("rfta")
             skipelem("rfts")
+            skipelem("SE,Bootloader")
+            skipelem("SE,Firmware")
+            skipelem("SE,MigrationOS")
+            skipelem("SE,OS")
+            skipelem("SE,UpdatePayload")
             
             plist_t digest = plist_dict_get_item(node, "Digest");
             if (!digest || plist_get_node_type(digest) != PLIST_DATA)
