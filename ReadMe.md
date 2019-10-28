@@ -1,6 +1,8 @@
 # img4tool
 _Parses img4, im4p, im4m files._
 
+__It’s old version of img4tool. It’s unmaintained for now.__
+
 Latest compiled version can be found [here](https://github.com/s0uthwest/img4tool/releases). Windows & Linux version are supported, but I won't compile it.
 
 ## Compiling
@@ -19,4 +21,4 @@ Creator of [original project](https://github.com/tihmstar/img4tool) - [tihmstar]
 
 
 ReadMe updated on:
-      2019-02-20
+      2019-10-28
